@@ -177,9 +177,12 @@ kubectl config use-context tkg-berlin
 ```
 k apply -f ./authorize-psp-for-gc-service-accounts.yaml (https://github.com/ogelbric/Harbor_on_VM_and_Guestcluster_Cert/blob/main/authorize-psp-for-gc-service-accounts.yaml)
 ```
-
-k apply -f ./nginx-local-harbor.yaml 
-
+### Apply POD config with local harbor image regestry reference 
+```
+k apply -f ./nginx-local-harbor.yaml (https://github.com/ogelbric/Harbor_on_VM_and_Guestcluster_Cert/blob/main/nginx-local-harbor.yaml)
+```
+### Looking at evennts (k get events)
+```
 16s         Normal    Scheduled                  pod/nginx-77f5c65bb4-btdmz                       Successfully assigned default/nginx-77f5c65bb4-btdmz to tkg-berlin-workers-7ljst-8467947589-ftb7p
 15s         Normal    Pulling                    pod/nginx-77f5c65bb4-btdmz                       Pulling image "orfdns.lab.lab/library/http-echo:latest"
 14s         Normal    Pulled                     pod/nginx-77f5c65bb4-btdmz                       Successfully pulled image "orfdns.lab.lab/library/http-echo:latest"
@@ -190,15 +193,17 @@ k apply -f ./nginx-local-harbor.yaml
 16s         Normal    SuccessfulCreate           replicaset/nginx-77f5c65bb4                      Created pod: nginx-77f5c65bb4-bkmp5
 11s         Normal    EnsuringLoadBalancer       service/nginx                                    Ensuring load balancer
 16s         Normal    ScalingReplicaSet          deployment/nginx                                 Scaled up replica set nginx-77f5c65bb4 to 3
+```
 
-
-Inspiration
+### Inspiration
+```
 https://tanzu.vmware.com/content/blog/how-to-set-up-harbor-registry-self-signed-certificates-tanzu-kubernetes-clusters
+```
 
 
-
-Trouble shooting
-	ssh to vCenter
+### Trouble shooting
+```
+        ssh to vCenter
 	/usr/lib/vmware-wcp/decryptK8Pwd.py
 	ssh to worker
          crictl pull orfdns.lab.local/library/nginx:latest
@@ -221,12 +226,13 @@ Trouble shooting
 
 	sudo crictl images
 	sudo crictl pull orfdns.lab.local/library/nginx:latest
+```
 
 
 
-
-Trouble shooting DNS on the worker node...
-===============vmware-system-user@tkg-berlin-control-plane-bp62x [ ~ ]$ sudo crictl ps -a
+### Trouble shooting DNS on the worker node...
+```
+vmware-system-user@tkg-berlin-control-plane-bp62x [ ~ ]$ sudo crictl ps -a
 CONTAINER           IMAGE               CREATED             STATE               NAME                           ATTEMPT             POD ID
 bf18601782b83       44e90013d2071       5 days ago          Running             csi-resizer                    0                   49ac2e9f97fb5
 d902851c29792       59d913ec2e044       5 days ago          Running             csi-provisioner                0                   49ac2e9f97fb5
@@ -265,5 +271,5 @@ vmware-system-user@tkg-berlin-control-plane-bp62x [ ~ ]$========================
 
 
 sudo crictl exec -i -t   c68570329573b  /bin/bash
-
+```
 
