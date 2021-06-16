@@ -168,11 +168,15 @@ sdiff a b
 k apply -f ~/7u2a/cluster.yaml   (https://github.com/ogelbric/Harbor_on_VM_and_Guestcluster_Cert/blob/main/cluster.yaml)
 ```
 
+### Log into guest cluster
+```
 l2540
 kubectl config use-context tkg-berlin
-
-k apply -f ./authorize-psp-for-gc-service-accounts.yaml
-
+```
+### Apply permissions
+```
+k apply -f ./authorize-psp-for-gc-service-accounts.yaml (https://github.com/ogelbric/Harbor_on_VM_and_Guestcluster_Cert/blob/main/authorize-psp-for-gc-service-accounts.yaml)
+```
 
 k apply -f ./nginx-local-harbor.yaml 
 
