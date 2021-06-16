@@ -1,7 +1,7 @@
 # 1) Install Harbor on VM in docker
 # 2) Generate cert for guest cluster local Harbor image pull
 # 3) Build Guest cluster
-# 4) Use image on local harbor and create pod
+# 4) Use image on local harbor and create POD
 
 
 ## Harbor download / install 
