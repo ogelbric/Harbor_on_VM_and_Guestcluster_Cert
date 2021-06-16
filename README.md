@@ -165,7 +165,7 @@ sdiff a b
 
 ### Create a new guest cluster
 ```
-k apply -f ~/7u2a/cluster.yaml
+k apply -f ~/7u2a/cluster.yaml   (https://github.com/ogelbric/Harbor_on_VM_and_Guestcluster_Cert/blob/main/cluster.yaml)
 ```
 
 l2540
