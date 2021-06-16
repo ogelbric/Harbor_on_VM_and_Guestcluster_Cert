@@ -6,20 +6,21 @@
 
 ## Harbor download / install 
 
-Download: 
+### Download: 
+```
 https://github.com/goharbor/harbor/releases
+```
 
-Move file
+### Move file and unpack
+```
 scp harbor-offline-installer-v2.1.5.tgz root@10.197.79.2:/tmp/.
-
-Unpack
 mv harbor-offline-installer-v2.1.5.tgz /usr/local
 cd /usr/local
 tar xzvf harbor-offline-installer-v2.1.5.tgz
-
-Https:
+```
+### Generate keys
+```
 openssl genrsa -out ca.key 4096
-
 
 openssl req -x509 -new -nodes -sha512 -days 3650 \
  -subj "/C=CN/ST=Dallas/L=Texas/O=example/OU=Personal/CN=orfdns.lab.local" \
@@ -67,31 +68,34 @@ cp orfdns.lab.lab.key /etc/docker/certs.d/orfdns.lab.lab/
 cp ca.crt /etc/docker/certs.d/orfdns.lab.lab/
 
 systemctl restart docker
+```
 
-
-Harbor yaml file
+### Harbor yaml file fix up
+```
 cp harbor.yml.tmpl  harbor.yml
 Items changed in file
-	hostname: orfdns.lab.local
+	hostname: orfdns.lab.lab
 	certificate: /data/cert/orfdns.lab.local.crt
   	private_key: /data/cert/orfdns.lab.local.key
 	harbor_admin_password: VMware1!
+```
 
-Harbor install
+### Harbor install
+```
 sudo ./install.sh
 
-
-Installation with Notary, Trivy, and Chart Repository Service
+Optional installation with Notary, Trivy, and Chart Repository Service
 sudo ./install.sh --with-notary --with-trivy --with-chartmuseum
+```
 
-
+### Incase the harbor yaml file had some typos (like in my case and things need to be re-done
+```
 Re-read / re-install harbor and harbor.yml file
 --------------------------------------------------
-Cd /usr/local/harbor
+cd /usr/local/harbor
 sudo docker-compose down -v
 sudo ./prepare
 sudo docker-compose up -d
-
 
 Clean install
 ---------------
@@ -100,15 +104,19 @@ sudo docker-compose down -v
 rm -r /data/database
 rm -r /data/registry
 sudo ./install.sh
+```
 
-
+### Test the new harbor install (DNS has to be in place!)
+```
 https://orfdns.lab.lab
 
 docker login orfdns.lab.lab  (admin/Vmware1)
 docker tag nginx:latest orfdns.lab.lab/library/nginx:latest
 docker push orfdns.lab.lab/library/nginx:latest
+```
 
-Lifecycle / updates (incase you need to update cert or harbor yaml file)
+### Lifecycle / updates (incase you need to update cert or harbor yaml file)
+```
 https://goharbor.io/docs/1.10/install-config/reconfigure-manage-lifecycle/
 
 sudo docker-compose down -v
@@ -116,13 +124,10 @@ sudo ./prepare
 sudo ./prepare --with-notary --with-clair --with-chartmuseum
 sudo docker-compose up -d
 docker ps -a
+```
 
-
-
-
-
-Cert for cluster
-
+### Get the cert for the cluster and generate TKG service configuration
+```
 openssl s_client -connect orfdns.lab.lab:443.  (and cut and paste into tag service configuration)
  Or
 cat /usr/local/harbor/orfdns.lab.lab.cert | base64 -w0 > b2.txt
@@ -143,18 +148,25 @@ spec:
 EOF
 
 sed "s/BASE64here/`cat b2.txt`/" b1.yaml > tkgserviceconfiguration.yaml
+```
 
-Get onto supervisor namespace 
+### Get onto supervisor namespace (I have aliases for the login(s) and context swaps)
+```
 l1540
 k1
-
+```
+### Apply the service configuration yaml and check out the before and after
+```
 k get tkgserviceconfiguration  -o yaml > a
 kubectl apply -f ./tkgserviceconfiguration.yaml
 k get tkgserviceconfiguration  -o yaml > b
 sdiff a b
+```
 
-Re-create cluster
+### Create a new guest cluster
+```
 k apply -f ~/7u2a/cluster.yaml
+```
 
 l2540
 kubectl config use-context tkg-berlin
