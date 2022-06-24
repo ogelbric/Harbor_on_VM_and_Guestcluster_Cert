@@ -88,7 +88,7 @@ Optional installation with Notary, Trivy, and Chart Repository Service
 sudo ./install.sh --with-notary --with-trivy --with-chartmuseum
 ```
 
-### Incase the harbor yaml file had some typos (like in my case and things need to be re-done
+### Incase the harbor yaml file had some typos (in my case things need to be re-done)
 ```
 Re-read / re-install harbor and harbor.yml file
 --------------------------------------------------
@@ -99,7 +99,7 @@ sudo docker-compose up -d
 
 Clean install
 ---------------
-Cd /usr/local/harbor
+cd /usr/local/harbor
 sudo docker-compose down -v
 rm -r /data/database
 rm -r /data/registry
