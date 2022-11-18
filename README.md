@@ -181,6 +181,17 @@ k apply -f ./authorize-psp-for-gc-service-accounts.yaml (https://github.com/ogel
 ```
 k apply -f ./nginx-local-harbor.yaml (https://github.com/ogelbric/Harbor_on_VM_and_Guestcluster_Cert/blob/main/nginx-local-harbor.yaml)
 ```
+
+```
+    spec:
+      containers:
+      - name: hackazon
+        image: 192.168.2.3/namespace1000/all-in-one-hackazon
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+        - name: regcred
+```
 ### Looking at evennts (k get events)
 ```
 16s         Normal    Scheduled                  pod/nginx-77f5c65bb4-btdmz                       Successfully assigned default/nginx-77f5c65bb4-btdmz to tkg-berlin-workers-7ljst-8467947589-ftb7p
