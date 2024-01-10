@@ -61,6 +61,17 @@ cp orfdns.lab.local.key /data/cert/
 
 openssl x509 -inform PEM -in orfdns.lab.local.crt -out orfdns.lab.local.cert
 
+### Docker install on Centos 9
+dnf -y remove podman runc
+curl https://download.docker.com/linux/centos/docker-ce.repo -o /etc/yum.repos.d/docker-ce.repo
+sed -i -e "s/enabled=1/enabled=0/g" /etc/yum.repos.d/docker-ce.repo
+dnf --enablerepo=docker-ce-stable -y install docker-ce
+systemctl enable --now docker
+rpm -q docker-ce
+docker version
+docker pull quay.io/centos/centos:stream9
+docker run quay.io/centos/centos:stream9 /bin/echo "Welcome to the Docker World!"
+
 mkdir -p /etc/docker/certs.d/orfdns.lab.local
 
 cp orfdns.lab.local.cert /etc/docker/certs.d/orfdns.lab.local/
