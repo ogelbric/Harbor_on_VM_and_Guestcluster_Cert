@@ -61,7 +61,7 @@ cp orfdns.lab.local.key /data/cert/
 
 openssl x509 -inform PEM -in orfdns.lab.local.crt -out orfdns.lab.local.cert
 
-mkdir -p /etc/docker/certs.d/orfdns.local.lab
+mkdir -p /etc/docker/certs.d/orfdns.lab.local
 
 cp orfdns.lab.local.cert /etc/docker/certs.d/orfdns.lab.local/
 cp orfdns.lab.local.key /etc/docker/certs.d/orfdns.lab.local/
