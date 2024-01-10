@@ -85,7 +85,7 @@ systemctl restart docker
 ```
 cp harbor.yml.tmpl  harbor.yml
 Items changed in file
-	hostname: orfdns.lab.lab
+	hostname: orfdns.lab.local
 	certificate: /data/cert/orfdns.lab.local.crt
   	private_key: /data/cert/orfdns.lab.local.key
 	harbor_admin_password: VMware1!
@@ -119,7 +119,7 @@ sudo ./install.sh
 
 ### Test the new harbor install (DNS has to be in place!)
 ```
-https://orfdns.lab.lab
+https://orfdns.lab.local
 
 docker login orfdns.lab.lab  (admin/Vmware1)
 docker tag nginx:latest orfdns.lab.lab/library/nginx:latest
