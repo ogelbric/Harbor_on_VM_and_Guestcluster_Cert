@@ -86,8 +86,9 @@ systemctl restart docker
 cp harbor.yml.tmpl  harbor.yml
 Items changed in file
 	hostname: orfdns.lab.local
-	certificate: /data/cert/orfdns.lab.local.crt
-  	private_key: /data/cert/orfdns.lab.local.key
+	certificate: /big/data/cert/orfdns.lab.local.crt
+  	private_key: /big/data/cert/orfdns.lab.local.key
+	data_volume: /big/data
 	harbor_admin_password: VMware1!
 ```
 
@@ -112,8 +113,8 @@ Clean install
 ---------------
 cd /usr/local/harbor
 sudo docker-compose down -v
-rm -r /data/database
-rm -r /data/registry
+rm -r /big/data/database
+rm -r /big/data/registry
 sudo ./install.sh
 ```
 
