@@ -121,9 +121,9 @@ sudo ./install.sh
 ```
 https://orfdns.lab.local
 
-docker login orfdns.lab.lab  (admin/Vmware1)
-docker tag nginx:latest orfdns.lab.lab/library/nginx:latest
-docker push orfdns.lab.lab/library/nginx:latest
+docker login orfdns.lab.local  (admin/Vmware1)
+docker tag nginx:latest orfdns.lab.local/library/nginx:latest
+docker push orfdns.lab.local/library/nginx:latest
 ```
 
 ### Lifecycle / updates (incase you need to update cert or harbor yaml file)
