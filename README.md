@@ -27,12 +27,12 @@ openssl req -x509 -new -nodes -sha512 -days 3650 \
  -key ca.key \
  -out ca.crt
 
-openssl genrsa -out orfdns.lab.lab.key 4096
+openssl genrsa -out orfdns.lab.local.key 4096
 
 openssl req -sha512 -new \
-    -subj "/C=CN/ST=Dallas/L=Texas/O=example/OU=Personal/CN=orfdns.lab.lab" \
-    -key orfdns.lab.lab.key \
-    -out orfdns.lab.lab.csr
+    -subj "/C=CN/ST=Dallas/L=Texas/O=example/OU=Personal/CN=orfdns.lab.local" \
+    -key orfdns.lab.local.key \
+    -out orfdns.lab.local.csr
 
 cat > v3.ext <<-EOF
 authorityKeyIdentifier=keyid,issuer
@@ -42,30 +42,30 @@ extendedKeyUsage = serverAuth
 subjectAltName = @alt_names
 
 [alt_names]
-DNS.1=orfdns.lab.lab
+DNS.1=orfdns.lab.local
 DNS.2=lab.lab
 DNS.3=orfdns
-DNS.4=10.197.79.2
+DNS.4=192.168.1.5
 EOF
 
 openssl x509 -req -sha512 -days 3650 \
     -extfile v3.ext \
     -CA ca.crt -CAkey ca.key -CAcreateserial \
-    -in orfdns.lab.lab.csr \
-    -out orfdns.lab.lab.crt
+    -in orfdns.lab.local.csr \
+    -out orfdns.lab.local.crt
 
 mkdir -p /data/cert
 
-cp orfdns.lab.lab.crt /data/cert/
-cp orfdns.lab.lab.key /data/cert/
+cp orfdns.lab.local.crt /data/cert/
+cp orfdns.lab.local.key /data/cert/
 
-openssl x509 -inform PEM -in orfdns.lab.lab.crt -out orfdns.lab.lab.cert
+openssl x509 -inform PEM -in orfdns.lab.local.crt -out orfdns.lab.local.cert
 
-mkdir -p /etc/docker/certs.d/orfdns.lab.lab
+mkdir -p /etc/docker/certs.d/orfdns.local.lab
 
-cp orfdns.lab.lab.cert /etc/docker/certs.d/orfdns.lab.lab/
-cp orfdns.lab.lab.key /etc/docker/certs.d/orfdns.lab.lab/
-cp ca.crt /etc/docker/certs.d/orfdns.lab.lab/
+cp orfdns.lab.local.cert /etc/docker/certs.d/orfdns.lab.local/
+cp orfdns.lab.local.key /etc/docker/certs.d/orfdns.lab.local/
+cp ca.crt /etc/docker/certs.d/orfdns.lab.local/
 
 systemctl restart docker
 ```
