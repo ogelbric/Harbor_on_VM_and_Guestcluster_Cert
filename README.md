@@ -13,10 +13,10 @@ https://github.com/goharbor/harbor/releases
 
 ### Move file and unpack
 ```
-scp harbor-offline-installer-v2.1.5.tgz root@10.197.79.2:/tmp/.
-mv harbor-offline-installer-v2.1.5.tgz /usr/local
+pscp harbor-offline-installer-v2.10.0.tgz root@10.197.79.2:/tmp/.   # (windows -> Linux)
+mv harbor-offline-installer-v2.10.0.tgz /usr/local
 cd /usr/local
-tar xzvf harbor-offline-installer-v2.1.5.tgz
+tar xzvf harbor-offline-installer-v2.10.0.tgz
 ```
 ### Generate keys
 ```
